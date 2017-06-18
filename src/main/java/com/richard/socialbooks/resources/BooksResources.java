@@ -39,38 +39,19 @@ public class BooksResources {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> search(@PathVariable("id") Long id) {
-        Book book = null;
-
-        try {
-            book = booksService.search(id);
-        } catch (BookFoundException e) {
-            return  ResponseEntity.notFound().build();
-        }
-
+        Book book = booksService.search(id);
         return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-
-        try {
-            booksService.delete(id);
-        } catch (BookFoundException e) {
-            return  ResponseEntity.notFound().build();
-        }
-
+        booksService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Book book) {
-
-        try {
-            booksService.update(book);
-        } catch (BookFoundException e) {
-            return  ResponseEntity.notFound().build();
-        }
-
+        booksService.update(book);
         return ResponseEntity.noContent().build();
     }
 }
