@@ -26,13 +26,15 @@ public class AuthorsResource {
     public ResponseEntity<Void> save(@RequestBody Author author) {
         author = authorsService.save(author);
 
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(author.getId())
-                .toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(author.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Author> search(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(authorsService.search(id));
     }
 }

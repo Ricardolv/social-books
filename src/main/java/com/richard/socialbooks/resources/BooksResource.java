@@ -27,11 +27,8 @@ public class BooksResource {
     public ResponseEntity<Void> save(@RequestBody Book book) {
         book = booksService.save(book);
 
-        URI uri = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(book.getId())
-                    .toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}").buildAndExpand(book.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
 
@@ -59,9 +56,7 @@ public class BooksResource {
     public ResponseEntity<Void> addComment(@PathVariable("id") Long bookId, @RequestBody Comments comments) {
         booksService.saveComments(bookId, comments);
 
-        URI uri = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .build().toUri();
+        URI uri = ServletUriComponentsBuilder .fromCurrentRequest() .build().toUri();
 
         return ResponseEntity.created(uri).build();
 
