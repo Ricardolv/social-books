@@ -1,9 +1,9 @@
 package com.richard.socialbooks.resources;
 
 import com.richard.socialbooks.domain.Book;
-import com.richard.socialbooks.repository.BooksRepository;
+import com.richard.socialbooks.service.BooksService;
+import com.richard.socialbooks.service.exceptions.BookFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,16 +16,16 @@ import java.util.List;
 public class BooksResources {
 
     @Autowired
-    private BooksRepository booksRepository;
+    private BooksService booksService;
 
     @GetMapping
     public ResponseEntity<List<Book>> list() {
-        return ResponseEntity.ok(booksRepository.findAll());
+        return ResponseEntity.ok(booksService.findAll());
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody Book book) {
-        book = booksRepository.save(book);
+        book = booksService.save(book);
 
         URI uri = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -39,9 +39,11 @@ public class BooksResources {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> search(@PathVariable("id") Long id) {
-        Book book = booksRepository.findOne(id);
+        Book book = null;
 
-        if (null == book) {
+        try {
+            book = booksService.search(id);
+        } catch (BookFoundException e) {
             return  ResponseEntity.notFound().build();
         }
 
@@ -52,8 +54,8 @@ public class BooksResources {
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
 
         try {
-            booksRepository.delete(id);
-        } catch (EmptyResultDataAccessException e) {
+            booksService.delete(id);
+        } catch (BookFoundException e) {
             return  ResponseEntity.notFound().build();
         }
 
@@ -62,7 +64,13 @@ public class BooksResources {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@RequestBody Book book) {
-        booksRepository.save(book);
+
+        try {
+            booksService.update(book);
+        } catch (BookFoundException e) {
+            return  ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.noContent().build();
     }
 }
