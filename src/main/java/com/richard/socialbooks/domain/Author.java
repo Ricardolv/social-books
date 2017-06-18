@@ -4,14 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 @Entity
-public class Comments {
+@Table(name = "author")
+public class Author {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Id
@@ -19,18 +23,17 @@ public class Comments {
     private Long id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String text;
+    private String name;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String user;
+    private LocalDate birthDate;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDate date;
+    private String nationality;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOOK_ID")
-    private Book book;
+    @OneToMany(mappedBy = "author")
+    private List<Book> books;
 
 }

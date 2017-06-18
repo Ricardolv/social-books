@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
-public class BooksResources {
+public class BooksResource {
 
     @Autowired
     private BooksService booksService;

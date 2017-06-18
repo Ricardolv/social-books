@@ -35,6 +35,8 @@ public class Book {
     private List<Comments> comments;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "AUTHOR_ID")
+    private Author author;
 
 }
