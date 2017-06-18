@@ -3,7 +3,7 @@ package com.richard.socialbooks.resources;
 import com.richard.socialbooks.domain.Book;
 import com.richard.socialbooks.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,8 +19,8 @@ public class BooksResources {
     private BooksRepository booksRepository;
 
     @GetMapping
-    public List<Book> list() {
-        return booksRepository.findAll();
+    public ResponseEntity<List<Book>> list() {
+        return ResponseEntity.ok(booksRepository.findAll());
     }
 
     @PostMapping
@@ -45,16 +45,24 @@ public class BooksResources {
             return  ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(book);
+        return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        booksRepository.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+
+        try {
+            booksRepository.delete(id);
+        } catch (EmptyResultDataAccessException e) {
+            return  ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public void update(@RequestBody Book book) {
+    public ResponseEntity<Void> update(@RequestBody Book book) {
         booksRepository.save(book);
+        return ResponseEntity.noContent().build();
     }
 }
