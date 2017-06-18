@@ -1,7 +1,6 @@
 package com.richard.socialbooks.resources;
 
 import com.richard.socialbooks.domain.Author;
-import com.richard.socialbooks.domain.Book;
 import com.richard.socialbooks.service.AuthorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
