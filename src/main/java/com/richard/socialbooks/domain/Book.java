@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Book {
 
     @Id
@@ -22,7 +21,6 @@ public class Book {
     private Long id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @NonNull
     private String name;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

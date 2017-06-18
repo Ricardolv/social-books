@@ -23,4 +23,9 @@ public class BooksResources {
     public void save(@RequestBody Book book) {
         booksRepository.save(book);
     }
+
+    @GetMapping("/{id}")
+    public Book search(@PathVariable("id") Long id) {
+        return booksRepository.findOne(id);
+    }
 }
