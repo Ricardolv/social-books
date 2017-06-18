@@ -1,3 +1,3 @@
 # Social - Book - API 
 
-Simple api rest with books.
+Simple application of books.
