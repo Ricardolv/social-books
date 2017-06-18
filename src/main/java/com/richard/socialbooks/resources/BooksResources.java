@@ -3,8 +3,12 @@ package com.richard.socialbooks.resources;
 import com.richard.socialbooks.domain.Book;
 import com.richard.socialbooks.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,13 +24,28 @@ public class BooksResources {
     }
 
     @PostMapping
-    public void save(@RequestBody Book book) {
-        booksRepository.save(book);
+    public ResponseEntity<Void> save(@RequestBody Book book) {
+        book = booksRepository.save(book);
+
+        URI uri = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(book.getId())
+                    .toUri();
+
+        return ResponseEntity.created(uri).build();
+
     }
 
     @GetMapping("/{id}")
-    public Book search(@PathVariable("id") Long id) {
-        return booksRepository.findOne(id);
+    public ResponseEntity<?> search(@PathVariable("id") Long id) {
+        Book book = booksRepository.findOne(id);
+
+        if (null == book) {
+            return  ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(book);
     }
 
     @DeleteMapping("/{id}")
