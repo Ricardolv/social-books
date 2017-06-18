@@ -66,4 +66,9 @@ public class BooksService {
     private void existBook(Book book) {
         search(book.getId());
     }
+
+    public List<Comments> listComments(Long bookId) {
+        Book book = search(bookId);
+        return book.getComments();
+    }
 }
