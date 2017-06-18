@@ -8,16 +8,17 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "book")
+
 @Data
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
+@Entity
+@Table(name = "book")
 public class Book {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -29,8 +30,8 @@ public class Book {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publishers;
 
-    @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "book")
     private List<Comments> comments;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

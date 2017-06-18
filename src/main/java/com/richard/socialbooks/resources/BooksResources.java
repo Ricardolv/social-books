@@ -1,8 +1,8 @@
 package com.richard.socialbooks.resources;
 
 import com.richard.socialbooks.domain.Book;
+import com.richard.socialbooks.domain.Comments;
 import com.richard.socialbooks.service.BooksService;
-import com.richard.socialbooks.service.exceptions.BookFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,5 +53,17 @@ public class BooksResources {
     public ResponseEntity<Void> update(@RequestBody Book book) {
         booksService.update(book);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/comments")
+    public ResponseEntity<Void> addComment(@PathVariable("id") Long bookId, @RequestBody Comments comments) {
+        booksService.saveComments(bookId, comments);
+
+        URI uri = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .build().toUri();
+
+        return ResponseEntity.created(uri).build();
+
     }
 }
