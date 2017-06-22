@@ -3,10 +3,13 @@ package com.richard.socialbooks.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -20,6 +23,9 @@ public class Comments {
     private Long id;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O comentario ser vazio.")
+    @Size(max = 1500, message = "O comentario nao pode conter mais de 1500 caracteres")
+    @JsonProperty("comentario")
     private String text;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

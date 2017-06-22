@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class AuthorsResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Author author) {
+    public ResponseEntity<Void> save(@Valid @RequestBody Author author) {
         author = authorsService.save(author);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

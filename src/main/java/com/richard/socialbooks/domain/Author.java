@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -23,14 +25,14 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O campo nome nao pode ser vazio.")
     private String name;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotNull(message = "Data nascimento e obrigatorio.")
     private Date birthDate;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotNull(message = "Nacionalidade e obrigatorio.")
     private String nationality;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

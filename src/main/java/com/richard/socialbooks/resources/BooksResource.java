@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class BooksResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Book book) {
+    public ResponseEntity<Void> save(@Valid @RequestBody Book book) {
         book = booksService.save(book);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()

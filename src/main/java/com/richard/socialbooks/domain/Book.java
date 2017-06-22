@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -24,18 +27,20 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O campo nome nao pode ser vazio.")
     private String name;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotNull(message = "Campo publicacao e obrigatorio.")
     private Date publication;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @NotEmpty(message = "O campo editora nao pode ser vazio.")
     private String publishers;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+
     @OneToMany(mappedBy = "book")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Size(max = 1500, message = "O resumo nao pode conter mais de 1500 caracteres")
     private List<Comments> comments;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
