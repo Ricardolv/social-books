@@ -1,12 +1,13 @@
 package com.richard.socialbooks.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(of = "id")
@@ -24,8 +25,9 @@ public class Comments {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String user;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDate date;
+    private Date date;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonIgnore

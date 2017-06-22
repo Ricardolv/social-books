@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -59,7 +60,7 @@ public class BooksService {
         Book book = booksRepository.findOne(id);
 
         comments.setBook(book);
-        comments.setDate(LocalDate.now());
+        comments.setDate(new Date());
         return commentsRepository.save(comments);
     }
 

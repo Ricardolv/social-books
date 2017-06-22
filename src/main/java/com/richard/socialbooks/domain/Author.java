@@ -1,5 +1,6 @@
 package com.richard.socialbooks.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -7,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -25,8 +26,9 @@ public class Author {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDate birthDate;
+    private Date birthDate;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nationality;

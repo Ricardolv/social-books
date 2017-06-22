@@ -1,11 +1,14 @@
 package com.richard.socialbooks.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,13 +27,14 @@ public class Book {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String name;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDate publication;
+    private Date publication;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String publishers;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "book")
     private List<Comments> comments;
 
