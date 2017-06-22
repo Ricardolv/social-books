@@ -3,6 +3,7 @@ package com.richard.socialbooks.resources;
 import com.richard.socialbooks.domain.Author;
 import com.richard.socialbooks.service.AuthorsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,7 +19,9 @@ public class AuthorsResource {
     @Autowired
     private AuthorsService authorsService;
 
-    @GetMapping
+    @GetMapping(produces = {
+            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE
+    })
     public ResponseEntity<List<Author>> list() {
         return ResponseEntity.ok(authorsService.list());
     }
