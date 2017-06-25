@@ -20,6 +20,7 @@ public class Book {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm")
     private Date publication;
     private String publishers;
+    private String resume;
     private List<Comments> comments;
     private Author author;
 
