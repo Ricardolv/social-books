@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
+@DynamicUpdate
 public class Book {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -37,6 +39,7 @@ public class Book {
     @NotEmpty(message = "O campo editora nao pode ser vazio.")
     private String publishers;
 
+    private String resume;
 
     @OneToMany(mappedBy = "book")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
