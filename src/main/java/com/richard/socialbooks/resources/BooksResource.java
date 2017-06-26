@@ -24,6 +24,7 @@ public class BooksResource {
     @Autowired
     private BooksService booksService;
 
+    @CrossOrigin
     @GetMapping
     public ResponseEntity<List<Book>> list() {
         return ResponseEntity.ok(booksService.findAll());
@@ -68,7 +69,7 @@ public class BooksResource {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         comments.setUser(auth.getName());
 
-        URI uri = ServletUriComponentsBuilder .fromCurrentRequest() .build().toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
 
         return ResponseEntity.created(uri).build();
 
